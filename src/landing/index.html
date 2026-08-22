@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentor Code | 招待制AIコーディングメンター</title>
+    <meta
+      name="description"
+      content="Mentor Codeは、サーバートークンを持つ招待ユーザーだけが利用できるAIコーディングメンターです。VS Code拡張、ローカルPrivacy Guard、送信前マスキング、段階式ヒント、差分レビューで安全に開発を進めます。"
+    />
+    <meta
+      name="keywords"
+      content="Mentor Code, AIコーディング, AIコーディングメンター, VS Code拡張, Privacy Guard, 送信前マスキング, 差分レビュー, 招待制AI, サーバートークン, セルフホスト"
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://mentor-code.ginjiro.homes/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mentor Code" />
+    <meta property="og:title" content="Mentor Code | 招待制AIコーディングメンター" />
+    <meta
+      property="og:description"
+      content="招待制サーバートークン、ローカルPrivacy Guard、送信前マスキングを備えたAIコーディングメンター。"
+    />
+    <meta property="og:url" content="https://mentor-code.ginjiro.homes/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#e18d53" />
+    <link rel="icon" type="image/png" href="./mentorcode_logo_mark.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "Mentor Code",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Windows, macOS, Linux",
+            "description": "Mentor Codeは、サーバートークンを持つ招待ユーザーだけが利用できるAIコーディングメンターです。VS Code拡張、ローカルPrivacy Guard、送信前マスキング、段階式ヒント、差分レビューを備えます。",
+            "url": "https://mentor-code.ginjiro.homes/",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/LimitedAvailability",
+              "category": "Invitation-only access"
+            },
+            "featureList": [
+              "招待制サーバートークン",
+              "VS Code拡張",
+              "ローカルPrivacy Guard",
+              "送信前マスキング",
+              "段階式ヒント",
+              "差分レビュー",
+              "App Server",
+              "Self-host対応"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Mentor Codeは誰でも使えますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "いいえ。Mentor Codeは、管理者からサーバートークンを提供された招待ユーザーだけが利用できるAIコーディングアプリです。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "コードや秘密情報はそのまま送信されますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "送信前にローカルPrivacy Guardが秘密情報、個人情報、内部情報を検出し、ブロックまたはマスキングします。さらにApp Server側でも安全性を再検査します。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "セルフホスト環境でも使えますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "はい。管理者が用意したApp Server URLとサーバートークンをVS Code拡張に設定して利用します。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へ移動</a>
+    <div id="app" class="landing-app">
+      <header class="site-header" data-header>
+        <a class="brand-link" href="#top" aria-label="Mentor Code トップへ">
+          <img class="brand-logo" data-logo="mark" alt="" />
+          <span class="brand-name">Mentor Code</span>
+        </a>
+        <nav class="site-nav" aria-label="主要ナビゲーション">
+          <a href="#why">強み</a>
+          <a href="#security">安全設計</a>
+          <a href="#access">導入</a>
+          <a
+            href="https://github.com/YunagiNeru/mentorcode"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHubでソースコードを見る（外部サイト）"
+          >GitHub</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="header-cta" href="#access">
+          <span>招待トークン</span>
+          <ph-arrow-right class="button-icon" size="16" weight="bold" aria-hidden="true"></ph-arrow-right>
+        </a>
+      </header>
+
+      <main id="main">
+        <section id="top" class="hero-section" aria-labelledby="hero-title">
+          <div class="hero-scene" aria-hidden="true">
+            <div class="scene-shell">
+              <div class="scene-toolbar">
+                <div class="scene-window-controls">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="scene-title">Invite-only workspace</div>
+                <div class="scene-status">Server token verified</div>
+              </div>
+              <div class="scene-layout">
+                <aside class="scene-sidebar">
+                  <div class="scene-brand-mark">
+                    <img data-logo="mark" alt="" />
+                  </div>
+                  <div class="scene-menu-line scene-menu-line-active"></div>
+                  <div class="scene-menu-line"></div>
+                  <div class="scene-menu-line scene-menu-line-short"></div>
+                  <div class="scene-menu-gap"></div>
+                  <div class="scene-meter">
+                    <span></span>
+                  </div>
+                </aside>
+                <div class="scene-main">
+                  <div class="scene-message scene-message-user">
+                    <span>差分レビュー前に影響範囲を整理したい</span>
+                  </div>
+                  <div class="scene-message scene-message-assistant">
+                    <div class="scene-message-heading">送信前プレビュー</div>
+                    <div class="scene-scan-grid">
+                      <span>masked .env</span>
+                      <span>blocked secrets</span>
+                      <span>approved context</span>
+                    </div>
+                  </div>
+                  <div class="scene-code-window">
+                    <div class="scene-code-line scene-code-line-long"></div>
+                    <div class="scene-code-line"></div>
+                    <div class="scene-code-line scene-code-line-mask"></div>
+                    <div class="scene-code-line scene-code-line-short"></div>
+                  </div>
+                </div>
+                <aside class="scene-rail">
+                  <div class="scene-rail-card scene-rail-card-strong">Plan</div>
+                  <div class="scene-rail-card">Hint</div>
+                  <div class="scene-rail-card">Review</div>
+                </aside>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-content">
+            <p class="section-kicker">Invitation-only AI Coding Mentor</p>
+            <h1 id="hero-title">Mentor Code</h1>
+            <p class="hero-copy">
+              サーバートークンを提供された開発者だけが使える、招待制AIコーディングアプリです。
+              コードを送る前にローカルで検査し、秘密情報をマスクし、実装の理解とレビューを優先して開発を前に進めます。
+            </p>
+            <div class="hero-actions" aria-label="主要アクション">
+              <a class="primary-button" href="#access">
+                <ph-key class="button-icon" size="18" weight="bold" aria-hidden="true"></ph-key>
+                <span>招待トークンで始める</span>
+              </a>
+              <a class="secondary-button" href="#security">
+                <ph-shield-check class="button-icon" size="18" weight="bold" aria-hidden="true"></ph-shield-check>
+                <span>安全設計を見る</span>
+              </a>
+              <a
+                class="secondary-button"
+                href="https://github.com/YunagiNeru/mentorcode#self-host"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ph-github-logo class="button-icon" size="18" weight="bold" aria-hidden="true"></ph-github-logo>
+                <span>OSSとしてセルフホスト</span>
+                <ph-arrow-square-out class="button-icon" size="16" weight="bold" aria-hidden="true"></ph-arrow-square-out>
+              </a>
+            </div>
+            <dl class="hero-facts" aria-label="Mentor Codeの主要特徴">
+              <div>
+                <dt>Local first</dt>
+                <dd>送信前に検出・除外・マスク</dd>
+              </div>
+              <div>
+                <dt>Invite only</dt>
+                <dd>サーバートークン必須</dd>
+              </div>
+              <div>
+                <dt>VS Code</dt>
+                <dd>拡張UIから利用</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="signal-strip" aria-label="対応領域">
+          <span>AIコーディングメンター</span>
+          <span>VS Code Extension</span>
+          <span>Privacy Guard</span>
+          <span>Server Token</span>
+          <span>Self-host Ready</span>
+        </section>
+
+        <section id="why" class="section-band section-band-light" aria-labelledby="why-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <p class="section-kicker">Designed For Understanding</p>
+              <h2 id="why-title">速さだけでなく、説明できる開発へ。</h2>
+              <p>
+                Mentor Codeは、AIに丸投げする前提のツールではありません。
+                実装計画、段階式ヒント、差分レビュー、送信前プレビューを一つの流れにまとめ、変更の理由とリスクを開発者が追える状態にします。
+              </p>
+            </div>
+            <div class="feature-grid">
+              <article class="feature-card">
+                <ph-sliders-horizontal class="feature-icon" size="26" weight="duotone" aria-hidden="true"></ph-sliders-horizontal>
+                <p class="feature-eyebrow">Guided Work</p>
+                <h3>段階式ヒントで理解を残す</h3>
+                <p>答えを急がず、ヒント量を調整しながら要件整理、読むべきファイル、検証観点まで分解します。</p>
+              </article>
+              <article class="feature-card">
+                <ph-magnifying-glass class="feature-icon" size="26" weight="duotone" aria-hidden="true"></ph-magnifying-glass>
+                <p class="feature-eyebrow">Repository Context</p>
+                <h3>関連ファイルを送信前に可視化</h3>
+                <p>ワークスペース構成を読み取り、送信候補、除外ファイル、マスク内容を確認してからApp Serverへ渡します。</p>
+              </article>
+              <article class="feature-card">
+                <ph-git-branch class="feature-icon" size="26" weight="duotone" aria-hidden="true"></ph-git-branch>
+                <p class="feature-eyebrow">Review Loop</p>
+                <h3>差分レビューで学習点まで返す</h3>
+                <p>要件充足、例外、セキュリティ、保守性、次に確認すべき観点を整理し、レビューを作業の終点にしません。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-band section-band-ink" aria-labelledby="position-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <p class="section-kicker">Positioning</p>
+              <h2 id="position-title">主要AIエージェントの良さを、招待制と安全設計に寄せる。</h2>
+              <p>
+                近年のAIコーディングLPは、IDE統合、並列実行、タスク可視化、レビュー待ち状態を強く打ち出しています。
+                Mentor Codeはその体験を参考にしつつ、利用権限と送信前保護を最初から中核に置きます。
+              </p>
+            </div>
+            <div class="comparison-grid">
+              <article class="comparison-item">
+                <h3>一般的なAIコーディング体験</h3>
+                <ul>
+                  <li>素早い提案と自動化を前面に出す</li>
+                  <li>IDE、CLI、クラウド作業を横断する</li>
+                  <li>タスク進行やレビュー待ちを可視化する</li>
+                </ul>
+              </article>
+              <article class="comparison-item comparison-item-accent">
+                <h3>Mentor Code</h3>
+                <ul>
+                  <li>サーバートークンを持つ招待ユーザーに限定</li>
+                  <li>ローカル検査とマスキングを送信前に実施</li>
+                  <li>実装計画、ヒント、レビューで理解可能性を重視</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="security" class="section-band section-band-light" aria-labelledby="security-title">
+          <div class="section-inner security-layout">
+            <div class="section-heading">
+              <p class="section-kicker">Privacy Guard</p>
+              <h2 id="security-title">外へ送る前に、ローカルで止める。</h2>
+              <p>
+                リポジトリ本文、設定、ログには秘密情報が混ざります。
+                Mentor Codeは送信前プレビューを標準化し、マスク済みContextPackageだけを承認後にApp Serverへ渡します。
+              </p>
+            </div>
+            <div class="security-flow" aria-label="送信前安全フロー">
+              <article class="flow-step">
+                <ph-file-code class="flow-icon" size="24" weight="duotone" aria-hidden="true"></ph-file-code>
+                <span class="flow-index">01</span>
+                <h3>Workspace Scan</h3>
+                <p>許可された範囲のファイル構成を読み、除外対象と送信候補を分離します。</p>
+              </article>
+              <article class="flow-step">
+                <ph-shield-check class="flow-icon" size="24" weight="duotone" aria-hidden="true"></ph-shield-check>
+                <span class="flow-index">02</span>
+                <h3>Local Masking</h3>
+                <p>秘密情報、個人情報、内部情報をローカルで検出し、ブロックまたはマスクします。</p>
+              </article>
+              <article class="flow-step">
+                <ph-eye class="flow-icon" size="24" weight="duotone" aria-hidden="true"></ph-eye>
+                <span class="flow-index">03</span>
+                <h3>Preview Approval</h3>
+                <p>送信対象、除外理由、マスク箇所を確認し、承認後だけサーバーに送ります。</p>
+              </article>
+              <article class="flow-step">
+                <ph-cloud-check class="flow-icon" size="24" weight="duotone" aria-hidden="true"></ph-cloud-check>
+                <span class="flow-index">04</span>
+                <h3>Server Recheck</h3>
+                <p>App Server側でも未マスクの危険情報が残っていないか再検査します。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-band section-band-paper" aria-labelledby="workflow-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <p class="section-kicker">Workflow</p>
+              <h2 id="workflow-title">招待からレビューまで、権限を細く保つ。</h2>
+            </div>
+            <ol class="workflow-list">
+              <li>
+                <span class="workflow-number">1</span>
+                <div>
+                  <h3>管理者がサーバートークンを発行</h3>
+                  <p>利用者は提供されたトークンをVS Code拡張へ設定します。トークンがない環境ではApp Serverを利用できません。</p>
+                </div>
+              </li>
+              <li>
+                <span class="workflow-number">2</span>
+                <div>
+                  <h3>課題と参照ファイルを明示</h3>
+                  <p>必要なファイルを選び、ローカル検査を通過したContextだけを送信前プレビューに進めます。</p>
+                </div>
+              </li>
+              <li>
+                <span class="workflow-number">3</span>
+                <div>
+                  <h3>計画、ヒント、レビューを受け取る</h3>
+                  <p>AI応答は実装の理由、影響範囲、失敗条件、検証観点を中心に返し、理解の負債を増やしません。</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section id="access" class="section-band access-section" aria-labelledby="access-title">
+          <div class="section-inner access-layout">
+            <div class="access-copy">
+              <p class="section-kicker">Invite Access / Open Source</p>
+              <h2 id="access-title">招待環境を使う。あるいは、自分で運用する。</h2>
+              <p>
+                招待ユーザーは、管理者から受け取ったApp Server URLとサーバートークンですぐに利用できます。
+                OSSとしてソースコードを取得し、自分の環境にApp Serverをセルフホストすることもできます。
+              </p>
+              <div class="access-actions" aria-label="Mentor Codeの入手方法">
+                <a class="primary-button" href="/downloads/latest">
+                  <ph-download-simple class="button-icon" size="18" weight="bold" aria-hidden="true"></ph-download-simple>
+                  <span>VS Code拡張をダウンロード</span>
+                </a>
+                <a
+                  class="secondary-button"
+                  href="https://github.com/YunagiNeru/mentorcode#self-host"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ph-github-logo class="button-icon" size="18" weight="bold" aria-hidden="true"></ph-github-logo>
+                  <span>GitHubからソースを入手</span>
+                  <ph-arrow-square-out class="button-icon" size="16" weight="bold" aria-hidden="true"></ph-arrow-square-out>
+                </a>
+                <p>GitHubのセルフホスト手順では、App Serverの構築、初期管理者の作成、VS Code拡張の接続まで確認できます。</p>
+              </div>
+            </div>
+            <div class="access-panel" aria-label="導入条件">
+              <div class="access-panel-row">
+                <ph-key class="access-icon" size="24" weight="duotone" aria-hidden="true"></ph-key>
+                <div>
+                  <h3>必要なもの</h3>
+                  <p>招待サーバートークン、App Server URL、VS Code拡張</p>
+                </div>
+              </div>
+              <div class="access-panel-row">
+                <ph-lock-key class="access-icon" size="24" weight="duotone" aria-hidden="true"></ph-lock-key>
+                <div>
+                  <h3>守るもの</h3>
+                  <p>秘密情報、個人情報、内部URL、送信禁止パス</p>
+                </div>
+              </div>
+              <div class="access-panel-row">
+                <ph-checks class="access-icon" size="24" weight="duotone" aria-hidden="true"></ph-checks>
+                <div>
+                  <h3>確認するもの</h3>
+                  <p>マスク内容、影響範囲、テスト観点、ロールバック</p>
+                </div>
+              </div>
+              <ol class="install-steps" aria-label="VSIXインストール手順">
+                <li>
+                  <span>1</span>
+                  <p>このページから最新の <code>.vsix</code> をダウンロードします。</p>
+                </li>
+                <li>
+                  <span>2</span>
+                  <p>VS Codeの拡張機能画面で <code>...</code> を開き、<code>Install from VSIX...</code> を選択します。</p>
+                </li>
+                <li>
+                  <span>3</span>
+                  <p>ダウンロードしたVSIXを選択し、インストール後にVS Codeを再読み込みします。</p>
+                </li>
+                <li>
+                  <span>4</span>
+                  <p>Mentor Codeの設定でサーバートークンを入力し、有効表示を確認します。</p>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="section-band section-band-light" aria-labelledby="faq-title">
+          <div class="section-inner faq-layout">
+            <div class="section-heading">
+              <p class="section-kicker">FAQ</p>
+              <h2 id="faq-title">利用前に確認すべきこと。</h2>
+            </div>
+            <div class="faq-list">
+              <details>
+                <summary>Mentor Codeは誰でも使えますか？</summary>
+                <p>いいえ。管理者からサーバートークンを提供された招待ユーザーだけが利用できます。</p>
+              </details>
+              <details>
+                <summary>秘密情報はそのままApp Serverへ送られますか？</summary>
+                <p>送信前にローカルで検出、除外、マスクを行います。App Server側でも安全性を再検査します。</p>
+              </details>
+              <details>
+                <summary>セルフホスト環境でも使えますか？</summary>
+                <p>はい。管理者が用意したApp Server URLとサーバートークンをVS Code拡張に設定して利用します。</p>
+              </details>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <img class="footer-logo" data-logo="mark" alt="Mentor Code" />
+          <p>招待制AIコーディングメンター。理解できる開発と送信前保護を同じ画面で扱います。</p>
+          <a href="#top">ページ上部へ戻る</a>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

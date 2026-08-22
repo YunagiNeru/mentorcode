@@ -1,0 +1,20 @@
+node_modules/
+dist/
+coverage/
+artifacts/
+.mentor-code/
+app-server.config.json
+vendor/bonsai/downloads/
+*.vsix
+*.tar.gz
+.vscode-test/
+*.log
+
+# Local development and generated material that must not enter the OSS repository.
+.hallmark/
+outputs/
+src.zip
+LICENSE.txt
+Mentor_Code_*_v*.md
+docs/
+vendor/bonsai/model/

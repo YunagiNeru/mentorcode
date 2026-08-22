@@ -1,0 +1,90 @@
+name: Release candidate verification
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_live_gemini_canary:
+        description: Run one fixed, non-secret Gemini contract probe before packaging
+        required: true
+        type: boolean
+        default: false
+      gemini_model:
+        description: Exact Gemini model configured for the production canary
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-candidate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact commit with LFS assets
+        uses: actions/checkout@v5
+        with:
+          lfs: true
+
+      - name: Set up the canonical Node.js runtime
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+          cache: npm
+
+      - name: Pin npm used by the deployment build
+        run: npm install --global npm@10.9.4
+
+      - name: Install exactly from the lockfile
+        run: npm ci
+
+      - name: Type-check
+        run: npm run check
+
+      - name: Run all automated tests
+        run: npm test -- --reporter=dot
+
+      - name: Build all deliverables
+        run: npm run build
+
+      - name: Reject moderate or higher dependency vulnerabilities
+        run: npm audit --audit-level=moderate
+
+      - name: Run one redacted live Gemini contract probe
+        if: github.event_name == 'workflow_dispatch' && inputs.run_live_gemini_canary
+        run: npm run verify:gemini-live
+        env:
+          MENTOR_ALLOW_LIVE_GEMINI_CANARY: "true"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ inputs.gemini_model }}
+
+      - name: Package the release candidate only after the live contract probe
+        if: github.event_name == 'workflow_dispatch' && inputs.run_live_gemini_canary
+        run: npm run package:vsix
+
+      - name: Package the commit-bound App Server build
+        if: github.event_name == 'workflow_dispatch' && inputs.run_live_gemini_canary
+        run: npm run package:server
+
+      - name: Create the commit-bound SHA-256 manifest
+        if: github.event_name == 'workflow_dispatch' && inputs.run_live_gemini_canary
+        run: npm run release:manifest
+
+      - name: Upload the exact VSIX and its manifest
+        if: github.event_name == 'workflow_dispatch' && inputs.run_live_gemini_canary
+        uses: actions/upload-artifact@v4
+        with:
+          name: mentor-code-${{ github.sha }}
+          path: |
+            mentor-code-*.vsix
+            mentor-code-app-server-*.tar.gz
+            artifacts/release-manifest.json
+            artifacts/*.sha256
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0

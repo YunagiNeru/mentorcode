@@ -1,0 +1,8 @@
+{
+  "openAiModel": "gpt-5.4-mini",
+  "openAiReasoningEffort": "medium",
+  "geminiModel": "gemini-3.5-flash",
+  "geminiThinkingLevel": "medium",
+  "geminiFallbackModel": "gemini-3-flash-preview",
+  "geminiFallbackThinkingLevel": "low"
+}

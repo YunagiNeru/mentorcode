@@ -1,0 +1,290 @@
+{
+  "name": "mentor-code",
+  "displayName": "Mentor Code",
+  "description": "An open-source AI coding mentor with staged guidance, diff review, and privacy checks.",
+  "version": "0.1.5",
+  "mentorClientVersion": "20260716105300",
+  "private": false,
+  "packageManager": "npm@10.9.4",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:mentorCode.chat",
+    "onCommand:mentorCode.open",
+    "onCommand:mentorCode.scanWorkspace",
+    "onCommand:mentorCode.setServerToken",
+    "onCommand:mentorCode.clearServerToken",
+    "onCommand:mentorCode.setMcpServerToken",
+    "onCommand:mentorCode.clearMcpServerToken"
+  ],
+  "main": "./dist/extension/extension/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mentorCode.open",
+        "title": "Open Mentor Code Chat",
+        "category": "Mentor Code"
+      },
+      {
+        "command": "mentorCode.scanWorkspace",
+        "title": "Scan Workspace with Privacy Guard",
+        "category": "Mentor Code"
+      },
+      {
+        "command": "mentorCode.setServerToken",
+        "title": "Set App Server Token",
+        "category": "Mentor Code"
+      },
+      {
+        "command": "mentorCode.clearServerToken",
+        "title": "Clear App Server Token",
+        "category": "Mentor Code"
+      },
+      {
+        "command": "mentorCode.setMcpServerToken",
+        "title": "Set MCP Server Bearer Token",
+        "category": "Mentor Code"
+      },
+      {
+        "command": "mentorCode.clearMcpServerToken",
+        "title": "Clear MCP Server Bearer Token",
+        "category": "Mentor Code"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "mentorCode",
+          "title": "Mentor Code",
+          "icon": "media/mentorcode_logo_grayscale.png"
+        }
+      ]
+    },
+    "views": {
+      "mentorCode": [
+        {
+          "id": "mentorCode.chat",
+          "name": "Mentor Code",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Mentor Code",
+      "properties": {
+        "mentorCode.maxFiles": {
+          "type": "number",
+          "default": 200,
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Maximum number of workspace files considered for a single local Privacy Guard scan."
+        },
+        "mentorCode.maxFileBytes": {
+          "type": "number",
+          "default": 120000,
+          "minimum": 1024,
+          "maximum": 500000,
+          "description": "Maximum bytes read from one file during a local Privacy Guard scan."
+        },
+        "mentorCode.serverUrl": {
+          "type": "string",
+          "default": "https://api.mentor-code.ginjiro.homes",
+          "description": "App Server URL used by the extension. Use an http or https absolute URL."
+        },
+        "mentorCode.sendShortcut": {
+          "type": "string",
+          "default": "ctrlEnter",
+          "enum": [
+            "ctrlEnter",
+            "enter"
+          ],
+          "enumItemLabels": [
+            "Ctrl + Enter",
+            "Enter"
+          ],
+          "description": "Keyboard shortcut used to send a chat message."
+        },
+        "mentorCode.desktopNotificationsEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Windows desktop toast notifications when App Server responses are received."
+        },
+        "mentorCode.activityBadgeEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the Mentor Code activity badge for unread responses and pending local actions."
+        },
+        "mentorCode.customInstructionsEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Apply the user-home AGENTS.md as lower-priority context for external LLM requests."
+        },
+        "mentorCode.skillsEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Discover trusted workspace Skills from .agents/skills and apply explicit or automatically selected workflows after local safety checks."
+        },
+        "mentorCode.mcpEnabled": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Enable MCP Tool discovery and approval-based execution for globally configured remote servers."
+        },
+        "mentorCode.mcpServers": {
+          "type": "array",
+          "default": [],
+          "scope": "machine",
+          "description": "Global MCP servers. HTTP supports none, bearer, and OAuth; STDIO launches without a shell.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "displayName"
+            ],
+            "anyOf": [
+              {
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "required": [
+                  "transport",
+                  "command"
+                ]
+              }
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "description": "Stable lowercase server identifier."
+              },
+              "displayName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "transport": {
+                "type": "string",
+                "enum": [
+                  "http",
+                  "stdio"
+                ],
+                "default": "http"
+              },
+              "auth": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "bearer",
+                  "oauth"
+                ],
+                "default": "bearer"
+              },
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "args": {
+                "type": "array",
+                "maxItems": 32,
+                "items": {
+                  "type": "string",
+                  "maxLength": 2048
+                }
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Workspace browsing remains available, but send previews and command-related actions are disabled until the workspace is trusted.",
+      "restrictedConfigurations": [
+        "mentorCode.maxFiles",
+        "mentorCode.maxFileBytes",
+        "mentorCode.serverUrl",
+        "mentorCode.customInstructionsEnabled",
+        "mentorCode.skillsEnabled",
+        "mentorCode.mcpEnabled",
+        "mentorCode.mcpServers"
+      ]
+    }
+  },
+  "scripts": {
+    "clean": "rimraf dist coverage",
+    "build": "npm run build:extension && npm run build:server && npm run build:webview && npm run build:landing",
+    "build:extension": "tsc -p tsconfig.extension.json",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:webview": "vite build",
+    "build:landing": "vite build --config vite.landing.config.ts",
+    "check": "tsc -p tsconfig.check.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev:webview": "vite --host 127.0.0.1",
+    "dev:landing": "vite --config vite.landing.config.ts --host 127.0.0.1",
+    "start:server": "node dist/server/server/server.js",
+    "verify:gemini-live": "npm run build:server && node dist/server/server/ops/geminiContractProbe.js",
+    "verify:custom-instruction-review-live": "npm run build:server && node dist/server/server/ops/customInstructionReviewContractProbe.js",
+    "release:manifest": "node scripts/create-release-manifest.mjs",
+    "verify:vsix": "vsce ls | node scripts/verify-vsix-contents.mjs",
+    "package:vsix": "npm run verify:vsix && vsce package --allow-missing-repository",
+    "package:server": "bash scripts/package-app-server.sh",
+    "backup:server": "node scripts/backup-app-server.mjs",
+    "restore:server": "node scripts/restore-app-server.mjs",
+    "install:vsix": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-vsix.ps1"
+  },
+  "devDependencies": {
+    "@emnapi/core": "1.11.2",
+    "@emnapi/runtime": "1.11.2",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.0.0",
+    "@types/node-notifier": "^8.0.5",
+    "@types/vscode": "^1.92.0",
+    "@vscode/vsce": "^3.2.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.0.0",
+    "@phosphor-icons/webcomponents": "^2.1.5",
+    "better-sqlite3": "^13.0.3",
+    "linguist-languages": "^9.4.0",
+    "monaco-editor": "0.55.1",
+    "node-notifier": "^10.0.1",
+    "shiki": "^4.2.0",
+    "yaml": "2.9.0"
+  },
+  "overrides": {
+    "monaco-editor": {
+      "dompurify": "3.4.12"
+    },
+    "node-notifier": {
+      "uuid": "11.1.1"
+    }
+  }
+}

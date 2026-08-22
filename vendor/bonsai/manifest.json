@@ -1,0 +1,17 @@
+{
+  "name": "1-Bit Bonsai 1.7B",
+  "model": {
+    "file": "model/Bonsai-1.7B-Q1_0.gguf",
+    "sha256": "3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3",
+    "source": "https://huggingface.co/prism-ml/Bonsai-1.7B-gguf/resolve/main/Bonsai-1.7B-Q1_0.gguf",
+    "license": "Apache-2.0"
+  },
+  "runtime": {
+    "name": "llama.cpp",
+    "release": "b9637",
+    "platform": "win-x64-cpu",
+    "binary": "bin/win-x64/llama-cli.exe",
+    "binarySha256": "22224100c1dacef7e5203d85c3a7a7a696b3b4ae263dbca9cc36b069ddf178fa",
+    "source": "https://github.com/ggml-org/llama.cpp/releases/download/b9637/llama-b9637-bin-win-cpu-x64.zip"
+  }
+}
